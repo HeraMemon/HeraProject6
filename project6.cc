@@ -17,13 +17,14 @@
 #define MATRIX_NAME_STRING "Test Matrix"
 
 using namespace std;
-
+//This is my binary file header
 class BinaryFileHeader{
 public:
   uint32_t magicNumber; 
   uint32_t versionNumber;
   uint64_t numRecords;
 };
+//This is my binary file record
 class BinaryFileRecord{
 public:
   
@@ -32,7 +33,7 @@ public:
 
 };
 
-
+//This is my main
 int main()
 {
   
