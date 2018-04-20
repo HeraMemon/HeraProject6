@@ -1,9 +1,8 @@
 /*
- * Usage of CDK Matrix
- *
- * File:   example1.cc
- * Author: Stephen Perkins
- * Email:  stephen.perkins@utdallas.edu
+ * Hera memon
+ * hxm170001@utdallas.edu
+ * CS3377.002
+ * 
  */
 
 #include <iostream>
@@ -87,15 +86,27 @@ int main()
   setCDKMatrixCell(myMatrix, 1,1, magicNumber.c_str());
   setCDKMatrixCell(myMatrix, 1,2, versionNumber.c_str());
   setCDKMatrixCell(myMatrix, 1,3, numRecords.c_str());
-
+  
+  BinaryFileRecord *myOtherRecord = new BinaryFileRecord();
+  
+  int i=2;
+  
+  while(binInfile.read((char *) myOtherRecord,sizeof(BinaryFileRecord))){
+    stringstream input4;
+    input4.str("");//Make sure it's cleared out
+    string nameOfRecord = myOtherRecord->stringBuffer;
+    input4<<"strLen: "<< nameOfRecord.length();
+    string nameOfRecord2 = input4.str();
+    setCDKMatrixCell(myMatrix, i,1, nameOfRecord2.c_str());
+    setCDKMatrixCell(myMatrix, i,2, myOtherRecord->stringBuffer);
+    i++;
+    if(i>5){
+      break;
+    }
+  }
+    
   /* Display the Matrix */
   drawCDKMatrix(myMatrix, true);
-
-  /*
-   * Dipslay a message
-   */
-  setCDKMatrixCell(myMatrix, 2, 2, "Test Message");
-  drawCDKMatrix(myMatrix, true);    /* required  */
 
   /* so we can see results */
   unsigned char x;
