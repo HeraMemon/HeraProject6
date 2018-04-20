@@ -10,11 +10,11 @@
 #include "cdk.h"
 #include <fstream>
 #include <iomanip>
-
-
+#include <stdint.h>
+#include <sstream>
 #define MATRIX_WIDTH 3
 #define MATRIX_HEIGHT 5
-#define BOX_WIDTH 15
+#define BOX_WIDTH 25
 #define MATRIX_NAME_STRING "Test Matrix"
 
 using namespace std;
@@ -22,7 +22,7 @@ using namespace std;
 class BinaryFileHeader{
 public:
   uint32_t magicNumber; 
-  unit32_t versionNumber;
+  uint32_t versionNumber;
   uint64_t numRecords;
 };
 class BinaryFileRecord{
@@ -30,12 +30,13 @@ public:
   
   uint8_t strLength;
   char stringBuffer[25];
+
 };
 
 
 int main()
 {
-
+  
   WINDOW	*window;
   CDKSCREEN	*cdkscreen;
   CDKMATRIX     *myMatrix;           // CDK Screen Matrix
@@ -69,8 +70,24 @@ int main()
       _exit(1);
     }
   
-  //Binary header
-  
+  BinaryFileHeader *myRecord = new BinaryFileHeader();
+  //Creating my ifstream
+  ifstream binInfile("cs3377.bin", ios::in | ios::binary);
+  binInfile.read((char *) myRecord, sizeof(BinaryFileHeader));
+  ostringstream input;
+  input<<"Magic: 0x"<< hex << uppercase<< myRecord->magicNumber;
+  ostringstream input2;
+  input2<<"Version: "<< myRecord->versionNumber;
+  ostringstream input3;
+  input3<<"NumRecords: " << myRecord->numRecords;
+  //store into string
+  string magicNumber = input.str();
+  string versionNumber = input2.str();
+  string numRecords = input3.str();
+  setCDKMatrixCell(myMatrix, 1,1, magicNumber.c_str());
+  setCDKMatrixCell(myMatrix, 1,2, versionNumber.c_str());
+  setCDKMatrixCell(myMatrix, 1,3, numRecords.c_str());
+
   /* Display the Matrix */
   drawCDKMatrix(myMatrix, true);
 

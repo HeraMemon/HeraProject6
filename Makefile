@@ -18,9 +18,9 @@ LDLIBS = -lcdk -lcurses
 # This should not contain spaces or special characters
 
 PROJECTNAME = Project6
-EXECFILE = cdkexample
+EXECFILE = project6
 
-OBJS = example1.o
+OBJS = project6.o
 
 
 all: $(EXECFILE)
